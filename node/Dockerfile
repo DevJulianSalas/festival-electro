@@ -1,28 +1,20 @@
-
 FROM node:8
+MAINTAINER Julian Salas juliansalas080@gmail.com
 
 
-## Environmentvariables
-ENV NAME_PROJECT=library_app
-ENV WORKDIR=home
+# Create homeroot path
+
+RUN mkdir /home/app
+
+RUN npm install nodemon -g
+
+ADD ./app/package.json /home/app/package.json
+
+WORKDIR /home/app
+
+RUN npm install
+
+ADD ./app/nodedemon.json /home/app/nodemon.json
 
 
-# Create dir
-RUN mkdir $/WORKDIR/$NAME_PROJECT
-
-### add root project
-ADD app $/WORKDIR/$NAME_PROJECT
-
-### add package.json
-ADD package.json $/WORKDIR/$NAME_PROJECT
- 
-RUN npm install --prefix $/WORKDIR/$NAME_PROJECT
-
-### Install dependencies to project
-#RUN cd $WORKDIR/$NAME_PROJECT && npm install 
-
-#Work dir to development
- #$(ls | awk '{if($1 != "node_modules"){ print $1 }}')
-RUN chown -R 1000:1000 $/WORKDIR/$NAME_PROJECT
-WORKDIR $/WORKDIR/$NAME_PROJECT
 CMD npm start
