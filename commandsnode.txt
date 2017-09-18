@@ -1,0 +1,10 @@
+
+Install generator-expres is a tool make a structure for your app
+
+npm install express-generator -g
+
+
+make a structure app with express to api-rest 
+
+express node-rest-api --e
+
