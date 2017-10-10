@@ -11,6 +11,7 @@ const RegisterSchema = new schema({
 })
 
 
+
 Registered = mongoose.model('Registered', RegisterSchema);
 
 module.exports = Registered;

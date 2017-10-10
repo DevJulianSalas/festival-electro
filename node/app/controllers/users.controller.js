@@ -11,11 +11,14 @@ function create(req, res, next){
     const user = new User({
         user_name: req.body.user_name,
         name: req.body.name,
-        password: req.body.password
+        last_name: req.body.last_name,
+        password: req.body.password,
+        edad: req.body.edad,
+        email: req.body.email,
     });
     user.save()
         .then(saveUser => res.json(saveUser))
-        .catch(e => next(e));
+        .catch(error => res.json(error));
 
 }
 
