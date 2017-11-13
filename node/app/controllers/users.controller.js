@@ -1,13 +1,19 @@
 const User = require('../models/user.model');
+const schemaUser = require('../validators/user.validator');
+const Joi = require('joi');
 
 /** 
+ * 
  * Create new user
  * @property {string} req.body.username
  * @property {string} req.body.name
  * @property {string} req.body.password
 */
 
+
+
 function create(req, res, next){
+    schemaUser.schema()
     const user = new User({
         user_name: req.body.user_name,
         name: req.body.name,
@@ -24,15 +30,14 @@ function create(req, res, next){
 
 function get(req, res, next){
     const projection = ["user_name", "name"]
-    User.find({},projection,function(err, users){
+    User.find({}, projection, function(err, users){
         if (err) return err;
         res.json(users)
     })
 }
 
 function getById(req, res, next){
-    const userId = req.params.userid
-    const query = {"_id": userId}
+    const query = {"_id": req.params.userid}
     User.findOne(query, function(err, user){
         if (err) res.send(`User with ${userId} not found`);
         res.send(user);
@@ -54,6 +59,8 @@ function updateUser(req, res, next){
         res.send('User information update successful')
     })
 }
+
+
 
 
 module.exports.create = create;

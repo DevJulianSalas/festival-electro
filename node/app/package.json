@@ -1,5 +1,5 @@
 {
-  "name": "library-app",
+  "name": "electrofestival-app",
   "version": "0.0.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,8 @@
     "morgan": "~1.8.1",
     "node-restful": "^0.2.6",
     "package.json": "^2.0.1",
-    "serve-favicon": "~2.4.2"
+    "serve-favicon": "~2.4.2",
+    "joi":"~13.0.2"
   },
   "scripts": {
     "start": "nodemon -L ./bin/www"
