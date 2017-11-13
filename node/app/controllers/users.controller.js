@@ -1,6 +1,10 @@
 const User = require('../models/user.model');
-const schemaUser = require('../validators/user.validator');
-const Joi = require('joi');
+const schema = require('../validators/user.validator');
+const joi = require('joi');
+const validateUser = require('../helpers/helper').validateUser
+const validateObjectId = require('../helpers/helper').validateObjectId
+const mongooseObjectId = require('mongoose').Types.ObjectId;
+
 
 /** 
  * 
@@ -10,10 +14,10 @@ const Joi = require('joi');
  * @property {string} req.body.password
 */
 
-
-
+//POST method 
 function create(req, res, next){
-    schemaUser.schema()
+    const {error, value} = validateUser(req.body)
+    if (error) res.json(error)
     const user = new User({
         user_name: req.body.user_name,
         name: req.body.name,
@@ -22,12 +26,13 @@ function create(req, res, next){
         edad: req.body.edad,
         email: req.body.email,
     });
-    user.save()
-        .then(saveUser => res.json(saveUser))
-        .catch(error => res.json(error));
-
+    user.save(error)
+        .then(saveUser => res.json(
+            {"success":true,"create_up":saveUser.create_up}))
+        .catch(error => res.json({"error":error.errmsg}));
 }
 
+//GET method 
 function get(req, res, next){
     const projection = ["user_name", "name"]
     User.find({}, projection, function(err, users){
@@ -36,8 +41,11 @@ function get(req, res, next){
     })
 }
 
+//GET by argument Method
 function getById(req, res, next){
-    const query = {"_id": req.params.userid}
+    const {error, value} = validateObjectId(req.body)
+    if(error) res.json(error)
+    const query = {"_id": mongooseObjectId(params.userid)}
     User.findOne(query, function(err, user){
         if (err) res.send(`User with ${userId} not found`);
         res.send(user);
