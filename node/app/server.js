@@ -1,5 +1,5 @@
 const express = require('express');
-const routes = require('./routes/user.route');
+const routesUser = require('./routes/user.route');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const debug = require('debug')
@@ -22,10 +22,11 @@ mongoose.connect('mongodb://mongodb/festival_electro', function(err, res){
   console.log("Connect to database");
 });
 
-app.use('/api', routes);
+app.use('/api/v1/'.concat('users'), routesUser);
 
 
 app.get('/', function (req, res) {
+  console.log(req)
   res.send('Hello World!');
 });
 
