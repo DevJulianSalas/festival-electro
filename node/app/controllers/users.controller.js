@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+const User = require('../models/users.model');
 const validator = require('../validators/user.validator');
 const joi = require('joi');
 
@@ -20,15 +20,8 @@ function create(req, res, next){
             "message":error.details[0]
         }
     )
-    const user = new User({
-        user_name: value.user_name,
-        name: value.name,
-        last_name: value.last_name,
-        password: value.password,
-        edad: value.edad,
-        email: value.email,
-    });
-    user.save(error)
+    const user = new User({value});
+    user.save()
         .then(saveUser => res.json(
             {"success":true,"create_up":saveUser.create_up})
         )
@@ -48,9 +41,9 @@ function get(req, res, next){
 //GET by argument Method
 function getById(req, res, next) {
     const objectVal = validator.validateObjectId(req.params.ObjectIdUser)
+    if(objectVal.error) res.json(objectVal)
     const projection = ["user_name", "name","email"]
     const query = {"_id": objectVal}
-    if(objectVal.error) res.json(objectVal)
     User.findOne(query, projection, function(err, result){
         if (err) return err;
         res.json(result)
@@ -58,16 +51,16 @@ function getById(req, res, next) {
 }
 
 function deleteUser(req, res, next){
-    const validateDelete = validator.validateDelete(req.body)
-    if(validateDelete.error) res.json(validateDelete) 
-    const query = {"_id": validateDelete}
-    User.deleteOne(query, function(err, user){
-        if (err) res.json(err)
-        else res.json({
-            "message": "User delete successfull",
-            "operation": true
-        })
+  const validateDelete = validator.validateDelete(req.body)
+  if(validateDelete.error) res.json(validateDelete) 
+  const query = {"_id": validateDelete}
+  User.deleteOne(query, function(err, user){
+    if (err) res.json(err)
+    else res.json({
+      "message": "User delete successfull",
+      "operation": true
     })
+  })
 }
 
 

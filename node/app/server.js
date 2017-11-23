@@ -1,13 +1,13 @@
 const express = require('express');
-const routesUser = require('./routes/user.route');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const debug = require('debug')
-
+const routerUser = require('./routes/user.route');
+const routeEvent = require('./routes/event.route');
 
 const app = express();
-
 const log = debug("electrofestival-app*")
+
 
 
 app.use(bodyParser.json());
@@ -22,8 +22,17 @@ mongoose.connect('mongodb://mongodb/festival_electro', function(err, res){
   console.log("Connect to database");
 });
 
-app.use('/api/v1/'.concat('users'), routesUser);
 
+//**************/
+
+// Api-rest //
+
+const urlPath='/api/v1/'
+//endpoints
+app.use(urlPath.concat('users'), routerUser);
+app.use(urlPath.concat('events'), routeEvent);
+
+//**************/
 
 app.get('/', function (req, res) {
   console.log(req)

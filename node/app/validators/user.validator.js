@@ -3,7 +3,7 @@ const mongoObject = require('mongoose').Types.ObjectId;
 
 
 //* Regex validators *//
-const regexPassword=/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
 
 
 //* Schemas */
@@ -43,32 +43,27 @@ const validateUser = (schemaRequest) => {
 
 const validateUpdateUser = (schemaRequestUpdate) => {
     //schemaRequest is a json data request to validate updateUser
-    let {error, value} = joi.validate(schemaRequestUpdate, schemaUpdateUser)
+    let { error, value } = joi.validate(schemaRequestUpdate, schemaUpdateUser)
     if (error) return {
         "error": true,
         "message": error.details[0].message
     }
     const validaObectId = validateObjectId(value._id)
     if (validaObectId.error) return validaObectId
-    const updateUserObject = Object.assign(value, {"_id":validaObectId})
+    const updateUserObject = Object.assign(value, { "_id": validaObectId })
     return updateUserObject
-    
-    
-    
 }
-
 
 const validateObjectId = (ObjectIdRequest) => {
     //If is valid return ObjectId and true
     flagValid = mongoObject.isValid(ObjectIdRequest)
-    if(!flagValid) return {
+    if (!flagValid) return {
         "error": true,
         "message": "ObjectId not is valid, check out it",
         "object": ObjectIdRequest
-        }
+    }
     else return mongoObject(ObjectIdRequest)
 }
-
 
 const validateDeleteUser = (ObjectIdRequest) => {
     /**
@@ -76,9 +71,9 @@ const validateDeleteUser = (ObjectIdRequest) => {
      * with key _id, the second one check out if _id give is an objectid 
      * valid.
      */
-    const {error, value} = joi.validate(ObjectIdRequest, SchemaUserId, {
+    const { error, value } = joi.validate(ObjectIdRequest, SchemaUserId, {
         abortEarly: false,
-        }
+    }
     )
     if (error) return {
         "error": true,
