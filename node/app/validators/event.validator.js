@@ -13,7 +13,8 @@ const schemaEvent = joi.object().keys({
     enddate: joi.date().iso().required(),
     description: joi.string().required(),
     value: joi.number().min(0).required(),
-    currency: joi.string().required()
+    currency: joi.string().required(),
+    limit: joi.number().required()
 })
 
 const schemaEventUpdate = joi.object().keys({
@@ -26,7 +27,8 @@ const schemaEventUpdate = joi.object().keys({
     enddate: joi.date().iso(),
     description: joi.string(),
     value: joi.number().min(0),
-    currency: joi.string()
+    currency: joi.string(),
+    limit: joi.number()
 })
 
 

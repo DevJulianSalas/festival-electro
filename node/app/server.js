@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const debug = require('debug')
 const routerUser = require('./routes/user.route');
 const routeEvent = require('./routes/event.route');
+const routeRegister = require('./routes/register.route')
+
 
 const app = express();
 const log = debug("electrofestival-app*")
@@ -31,6 +33,7 @@ const urlPath='/api/v1/'
 //endpoints
 app.use(urlPath.concat('users'), routerUser);
 app.use(urlPath.concat('events'), routeEvent);
+app.use(urlPath.concat('registers'), routeRegister);
 
 //**************/
 

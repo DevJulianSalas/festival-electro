@@ -12,7 +12,8 @@ const EventsSchema = new schema({
     enddate: {type: Date, required: true},
     description: {type: String, required: true},
     value: {type: Number, required: true},
-    currency: {type: String, required: true}
+    currency: {type: String, required: true},
+    limit: {type: Number, required: true}
     }   
 )
 

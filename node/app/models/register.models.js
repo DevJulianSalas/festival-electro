@@ -1,17 +1,24 @@
 const mongoose = require('mongoose');
+const Users = require('./users.model')
+const Event = require('./events.model')
+
+
+//Specific objects
 const schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
+const typeObjectId = mongoose.Schema.Types.ObjectId
+
+
 
 const RegisterSchema = new schema({
-    user : {type: ObjectId, ref: 'User', required:true},
-    fill : {type: Number, required: true},
-    registered: {type: Number, required: true},
-    event : {type: ObjectId, ref: 'Event'}
-
+  
+  user : {type: typeObjectId, ref: Users, required:true},
+  usersRegistred: {type: Number, default:0 , unique:true},
+  event : {type: typeObjectId, ref: Event, required: true},  
+  create_up : {type: Date, default: Date.now}
 })
 
 
 
-Registered = mongoose.model('Registered', RegisterSchema);
+Registered = mongoose.model('RegisteredEventUsers', RegisterSchema);
 
 module.exports = Registered;
