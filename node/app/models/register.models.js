@@ -11,10 +11,10 @@ const typeObjectId = mongoose.Schema.Types.ObjectId
 
 const RegisterSchema = new schema({
   
-  user : {type: typeObjectId, ref: Users, required:true},
-  usersRegistred: {type: Number, default:0 , unique:true},
-  event : {type: typeObjectId, ref: Event, required: true},  
-  create_up : {type: Date, default: Date.now}
+  user : { type: typeObjectId, ref: 'Users', required:true},
+  usersRegistred: { type: Number, default:0 },
+  event : { type: typeObjectId, ref: 'Event', required: true},  
+  create_up : { type: Date, default: Date.now}
 })
 
 

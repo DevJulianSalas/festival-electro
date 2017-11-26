@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.route('/')
   .post(registerCtrl.create)
+  .get(registerCtrl.get)
+  .delete(registerCtrl.deleteRegister)
 
 
 
