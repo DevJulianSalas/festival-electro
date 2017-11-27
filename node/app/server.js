@@ -31,7 +31,7 @@ mongoose.connect('mongodb://mongodb/festival_electro', function(err, res){
 
 const urlPath='/api/v1/'
 //endpoints
-app.use(urlPath.concat('users'), routerUser);
+app.use(urlPath, routerUser);
 app.use(urlPath.concat('events'), routeEvent);
 app.use(urlPath.concat('registers'), routeRegister);
 

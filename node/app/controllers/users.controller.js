@@ -1,35 +1,35 @@
 const User = require('../models/users.model');
 const validator = require('../validators/user.validator');
 const joi = require('joi');
+const service = require('../services/auth.service')
 
-/** 
- * 
- * Create new user
- * @property {string} req.body.username
- * @property {string} req.body.name
- * @property {string} req.body.password
-*/
+/**
+ * Endpoints to user
+ * create: Add user   POST method
+ * get: get a list of users  GET method
+ * getById: get specific user give a Id GET method
+ * updateUser: update any field of user PUT method
+ * deleteUser: delete a user give a Id  DELETE method
+ */
 
-
-//POST method 
-function create(req, res, next){
+ function create(req, res, next){
     const {error, value} = validator.validateUser(req.body)
-    if (error) res.json(
-        {
-            "error": true,
-            "message":error.details[0]
-        }
-    )
-    const user = new User({value});
+    if (error) return res.status(400).send({
+      error: true,
+      message:error.details
+    })
+    const user = new User(value);
     user.save()
-        .then(saveUser => res.json(
-            {"success":true,"create_up":saveUser.create_up})
-        )
-        .catch(error => res.json({"error":error.errmsg})
-        );
+      .then(saveUser => res.send({
+        success:true,
+        create_up: saveUser.create_up,
+        token: service.createToken(user)
+      }))
+      .catch(error => res.send({
+        error:error.errmsg
+      }));
 }
 
-//GET method 
 function get(req, res, next){
     const projection = ["user_name", "name"]
     User.find({}, projection, function(err, users){
@@ -38,7 +38,6 @@ function get(req, res, next){
     })
 }
 
-//GET by argument Method
 function getById(req, res, next) {
     const objectVal = validator.validateObjectId(req.params.ObjectIdUser)
     if(objectVal.error) res.json(objectVal)
@@ -62,7 +61,6 @@ function deleteUser(req, res, next){
     })
   })
 }
-
 
 function updateUser(req, res, next){
     const validateUpdate = validator.validateUpdateUser(req.body)
@@ -88,12 +86,37 @@ function updateUser(req, res, next){
         })
 }
 
+//Helpers Method
+
+function singIn (req, res) {
+  const {error, validate} = validator.validateUserEmail(req.body)
+  if (error) return res.status(500).send({
+    message: error.details, error:true
+  })
+  User.find(validate, (err, user)=> {
+    if (err) res.status(500).send({message: err, error:true})
+    if (!user) res.status(404).send({message: 'Email not exist to user'})
+    req.user = user
+    res.status(200).send({
+      message: 'Your logued were successfull',
+      token: service.createToken(user)
+    })
+  })
+}
 
 
 
+module.exports = {
+    create,
+    getById,
+    get,
+    updateUser,
+    deleteUser,
+    singIn
+}
 
-module.exports.create = create;
-module.exports.getById = getById;
-module.exports.get = get;
-module.exports.deleteUser = deleteUser;
-module.exports.updateUser = updateUser;
+// module.exports.create = create;
+// module.exports.getById = getById;
+// module.exports.get = get;
+// module.exports.deleteUser = deleteUser;
+// module.exports.updateUser = updateUser;

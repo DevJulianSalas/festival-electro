@@ -21,6 +21,11 @@ const SchemaUserId = joi.object().keys({
     "_id": joi.string().required()
 })
 
+const schemaUserEmail = joi.object().keys({
+  email: joi.string().email().required()
+})
+
+
 const schemaUpdateUser = joi.object().keys({
     "_id": joi.string().required(),
     user_name: joi.string(),
@@ -39,6 +44,10 @@ const validateUser = (schemaRequest) => {
     return joi.validate(schemaRequest, schemaUser, {
         abortEarly: false,
     })
+}
+const validateUserEmail = (schemaRequest) => {
+  //Check out if schemaRequest has well format email
+  return joi.validate(schemaRequest, schemaUserEmail)
 }
 
 const validateUpdateUser = (schemaRequestUpdate) => {
@@ -85,9 +94,15 @@ const validateDeleteUser = (ObjectIdRequest) => {
 }
 
 
+module.exports = {
+    validateUser,
+    validateObjectId,
+    validateDeleteUser,
+    validateUpdateUser,
+    validateUserEmail
+}
 
-
-module.exports.validateUser = validateUser;
-module.exports.validateObjectId = validateObjectId;
-module.exports.validateDelete = validateDeleteUser;
-module.exports.validateUpdateUser = validateUpdateUser;
+// module.exports.validateUser = validateUser;
+// module.exports.validateObjectId = validateObjectId;
+// module.exports.validateDelete = validateDeleteUser;
+// module.exports.validateUpdateUser = validateUpdateUser;
