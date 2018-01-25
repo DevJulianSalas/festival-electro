@@ -10,7 +10,8 @@ const UserSchema = new schema({
     edad: {type: Number, required: true},
     email: {type: String, required: true, unique: true},
     create_up : {type: Date, default: Date.now},
-    update_up : {type: Date}
+    update_up : {type: Date},
+    active: {type: Boolean, default: false}
     }
 )
 

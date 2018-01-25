@@ -10,6 +10,7 @@ RUN npm install nodemon -g
 
 ADD ./app/package.json /home/app/package.json
 
+
 WORKDIR /home/app
 
 RUN npm install

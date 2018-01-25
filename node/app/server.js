@@ -19,7 +19,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // connection mongose
 
-mongoose.connect('mongodb://mongodb/festival_electro', function(err, res){
+
+
+mongoose.connect(process.env.MONGO_DB_CONNECTION, function(err, res){
   if(err) throw err;
   console.log("Connect to database");
 });

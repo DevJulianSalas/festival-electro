@@ -1,6 +1,7 @@
 version: '3'
 services:
   web:
+    image: platnet/festival-electro-app:develop
     build: ./node
     volumes:
       - "./node/app:/home/app/"

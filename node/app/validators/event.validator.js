@@ -17,6 +17,8 @@ const schemaEvent = joi.object().keys({
     limit: joi.number().required()
 })
 
+
+
 const schemaEventUpdate = joi.object().keys({
     _id: joi.string().required(),
     name: joi.string().min(1).max(100),
