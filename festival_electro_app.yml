@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name:  nodeelectrofestival.com  # this is dns, make sure of write correct format to DNS
+  labels:
+    app: electro_festival
+spec:
+  containers:
+  - name:  k8-electro-festival
+    image: platnet/festival-electro-app:develop
+    ports:
+      - containerPort: 3000
+
