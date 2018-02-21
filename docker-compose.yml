@@ -19,4 +19,17 @@ services:
       - 27017:27017
     volumes:
       - ./datadb:/data/db
+  
+  frontend:
+    image: platnet/festival-electro-app-frontend:develop
+    build: ./frontend/electro-festival-app
+    ports:
+      - "3000:3000"
+      - "35729:35729"
+    volumes:
+      - ./frontend/electro-festival-app:/app
+
+
+    
+    
     

@@ -7,7 +7,9 @@ metadata:
 spec:
   containers:
   - name:  k8-electro-festival
-    image: platnet/festival-electro-app:develop
+    #image: #platnet/festival-electro-app:develop
+    image: hello-world
+    imagePullPolicy: Always
     ports:
       - containerPort: 3000
 
