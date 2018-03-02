@@ -7,17 +7,18 @@ import MenuRegister from './MenuRegister';
 
 //Material-ui components
 import { withStyles } from 'material-ui/styles';
+import Grid from 'material-ui/Grid';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Icon from 'material-ui/Icon';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 
 const styles = {
   root: {
+    display: 'flex',
     flexGrow: 1,
+    
   },
   colorPrimary:{
     background: "#009688"
@@ -35,11 +36,11 @@ function ButtonAppBar(props) {
   const { classes } = props;
 
   return (
-    <div className={classes.root}>
+    <Grid className={classes.root}>
       <AppBar position="static" className={classes.colorPrimary}>
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-            <MenuIcon />
+          <MenuIcon />
           </IconButton>
           <Typography align="center" variant="title" color="inherit" className={classes.flex}>
             Electro Festival
@@ -47,7 +48,7 @@ function ButtonAppBar(props) {
           <MenuRegister></MenuRegister>
         </Toolbar>
       </AppBar>
-    </div>
+    </Grid>
   );
 }
 

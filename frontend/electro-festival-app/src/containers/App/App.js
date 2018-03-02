@@ -12,26 +12,34 @@ import {
 //Own 
 import Header from '../../components/Header';
 import Register from '../Register'
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
-//Material-ui
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+//Override color primary from theme
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#009688',
+    },
+  },
+});
 
 
 const App = () => (
-    <MuiThemeProvider>
-      <div>
-        <Header/>
-        <div className="app">
-          <main>
-          <BrowserRouter>
-              <Switch>
-                <Route exact path='/register' component={Register}/>
-              </Switch>
-          </BrowserRouter>
-          </main>
-        </div>
-      </div>
-    </MuiThemeProvider>
+  <MuiThemeProvider theme={theme}>
+  <div>
+  <Header/>
+    <div className="app">
+      <main>
+        <BrowserRouter>
+          <Switch>
+            <Route exact path='/register' component={Register}/>
+          </Switch>
+        </BrowserRouter>
+      </main>
+    </div>
+</div>
+  </MuiThemeProvider>
+  
 )
 export default App;
