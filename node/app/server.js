@@ -20,12 +20,15 @@ app.use(bodyParser.urlencoded({extended: true}));
 // debug
 
 
+
+
 // connection mongose
 mongoose.connect(process.env.MONGO_DB_CONNECTION, function(err, res){
   if(err) throw err;
   console.log("Connect to database");
 });
 
+mongoose.set('debug', true);
 
 //**************/
 

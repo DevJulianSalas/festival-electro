@@ -19,6 +19,6 @@
     "serve-favicon": "~2.4.2"
   },
   "scripts": {
-    "start": "nodemon ./server.js"
+    "start": "nodemon  --inspect ./server.js"
   }
 }
