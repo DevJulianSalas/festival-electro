@@ -3,17 +3,20 @@ const schema = mongoose.Schema;
 
 
 const UserSchema = new schema({
-    name : {type: String, required: true},
-    last_name : {type: String, required: true},
-    user_name : {type: String, required: true, unique: true},
-    password : {type: String, required: true},
-    edad: {type: Number, required: true},
+    firstName: {type: String,required: true},
+    lastName:  {type: String, required: true},
+    userName:  {type: String, required: true, unique: true},
+    password:  {type: String, required: true},
+    //edad: {type: Number, required: false},
     email: {type: String, required: true, unique: true},
-    create_up : {type: Date, default: Date.now},
-    update_up : {type: Date},
+    birthday: {type: Date, default: new Date()},
+    create_up: {type: Date, default: Date.now},
+    update_up: {type: Date},
     active: {type: Boolean, default: false}
     }
 )
+
+
 
 User = mongoose.model('User', UserSchema);
 

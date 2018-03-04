@@ -16,6 +16,10 @@ import VisibilityOff from 'material-ui-icons/VisibilityOff';
 import IconButton from 'material-ui/IconButton';
 
 
+// Own components
+import userCrudApi from '../../api/user';
+
+
 
 
 const styles = theme => ({
@@ -76,31 +80,35 @@ class Register extends React.Component {
     super(props)
     this.state = {
       firstName: '',
-      last_name: '',
-      username: '',
+      lastName: '',
+      userName: '',
       email: '',
       birthDay: '',
-      password: '',
-      edad: 0,
+      password: '',  
       showPassword: false
+      // edad: 0,
     };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleChange = (prop) => event => {
-    this.setState({ [prop]: event.target.value })
-  }
-
-  handleSubmit(event) {
-    alert(this.state.value)
-    event.preventDefault()
   }
   
   handleClickShowPasssword = () => {
     this.setState({ showPassword: !this.state.showPassword });
-    
   };
+
+  register(event) {
+    userCrudApi.create(this.state)
+      .then((res) => {
+        console.log(res)
+        if (res.error) {
+          console.log("bad request")
+        } else {
+          console.log("good request")
+        }
+      });
+  }
+  
+  handleSubmit(event) {
+    event.preventDefault();
+    }
 
   render() {
     const { classes } = this.props;
@@ -120,19 +128,17 @@ class Register extends React.Component {
                 <Typography className={classes.typography} align="center" variant="headline" gutterBottom>
                   Register
                   </Typography>
-                <form action="" Validate>
+                <form action="" onSubmit={this.handleSubmit}>
                   <FormControl required className={classes.formControl}>
                     <InputLabel
-                      // classes={{ underline: classes.focused }}
                       className={classes.inputLabel}
                       htmlFor="name-simple">
                       First Name
                     </InputLabel>
                     <Input
-                      // classes={{ underline: classes.focused }}
-                      id="name-simple"
+                      autoFocus
                       value={this.state.firstName}
-                      onChange={event => this.setState({firstName: event.target.value})}
+                      onChange={event => this.setState({"firstName": event.target.value})}
                     />
                   </FormControl>
                   <FormControl required className={classes.formControl}>
@@ -142,9 +148,8 @@ class Register extends React.Component {
                       Last Name
                     </InputLabel>
                     <Input 
-                      id="name-simple" 
                       value={this.state.name} 
-                      onChange={event => this.setState({lastName: event.target.value})} 
+                      onChange={event => this.setState({"lastName": event.target.value})} 
                     />
                   </FormControl>
                   <FormControl required className={classes.formControl}>
@@ -154,9 +159,7 @@ class Register extends React.Component {
                       UserName
                     </InputLabel>
                     <Input 
-                      id="name-simple" 
-                      // value={this.state.name} 
-                      onChange={event => this.setState({userName: event.target.value})}
+                      onChange={event => this.setState({"userName": event.target.value})}
                     />
                   </FormControl>
                   <FormControl required className={classes.formControl}>
@@ -166,10 +169,9 @@ class Register extends React.Component {
                       Email
                     </InputLabel>
                     <Input 
-                      id="name-simple" 
                       type="email"
                       // value={this.state.name} 
-                      onChange={event => this.setState({email: event.target.value})} 
+                      onChange={event => this.setState({"email": event.target.value})} 
                     />
                   </FormControl>
                   <FormControl required className={classes.formControl}>
@@ -179,25 +181,12 @@ class Register extends React.Component {
                       type="date"
                       defaultValue="2017-05-24"
                       className={classes.textField}
+                      onChange={event => this.setState({"birthDay": event.target.value})}
                       InputLabelProps={{
                         shrink: true,
                       }}
                     />
                   </FormControl>
-                  {/*
-                  <FormControl required className={classes.formControl}>
-                    <InputLabel 
-                      className={classes.inputLabel} 
-                      htmlFor="name-simple">
-                      Age
-                    </InputLabel>
-                    <Input 
-                      id="name-simple" 
-                      // value={this.state.name} 
-                      onChange={event => this.setState({'age': event.target.value})} 
-                    />
-                  </FormControl>
-                  */}
                   <FormControl required className={classes.formControl}>
                     <InputLabel 
                       
@@ -206,10 +195,9 @@ class Register extends React.Component {
                       Password
                     </InputLabel>
                     <Input 
-                      id="name-simple"
                       type={this.state.showPassword ? 'text' : 'password'}
                       // value={this.state.name} 
-                      onChange={event => this.setState({password: event.target.value})}
+                      onChange={event => this.setState({"password": event.target.value})}
                       endAdornment={
                         <InputAdornment position="end">
                           <IconButton
@@ -222,23 +210,19 @@ class Register extends React.Component {
                       }
                     />
                   </FormControl>
-                  {/*
-                  <FormControl className={classes.formControl}>
-                    <InputLabel 
-                      className={classes.inputLabel} 
-                      htmlFor="name-simple">
-                      Repeat Password
-                    </InputLabel>
-                    <Input 
-                      id="name-simple" 
-                      value={this.state.name} 
-                      onChange={this.handleChange} 
-                    />
-                  </FormControl>
-                  */}
-                  <Button className={classes.button} variant="raised" color="primary">
-                    Send
-                    <Icon className={classes.rightIcon}>send</Icon>
+                  <Button 
+                    className={classes.button} 
+                    variant="raised"
+                    type="submit"
+                    onClick={event => this.register()}
+                    color="primary"
+                  >
+                    Submit
+                    <Icon 
+                      className={classes.rightIcon}
+                    >
+                      send
+                    </Icon>
                   </Button>
                 </form>
               </Paper>

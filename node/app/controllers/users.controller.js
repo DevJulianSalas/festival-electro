@@ -13,20 +13,22 @@ const service = require('../services/auth.service')
  */
 
  function create(req, res, next){
+   console.log(req.body)
     const {error, value} = validator.validateUser(req.body)
-    if (error) return res.status(400).send({
+    if (error) return res.status(400).json({
       error: true,
       message:error.details
     })
     const user = new User(value);
     user.save()
-      .then(saveUser => res.send({
-        success:true,
-        create_up: saveUser.create_up,
-        token: service.createToken(user)
+      .then(saveUser => res.status(200).json({
+        error:false,
+        create_up: saveUser.create_up
+        // token: service.createToken(user)
       }))
-      .catch(error => res.send({
-        error:error.errmsg
+      .catch(error => res.status(500).json({
+        error: true,
+        message: error.errmsg
       }));
 }
 

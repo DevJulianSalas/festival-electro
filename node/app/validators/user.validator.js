@@ -9,12 +9,13 @@ const regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.
 //* Schemas */
 
 const schemaUser = joi.object().keys({
-    user_name: joi.string().required(),
-    name: joi.string().required(),
-    last_name: joi.string().required(),
+    firstName: joi.string().required(),
+    lastName: joi.string().required(),
+    userName: joi.string().required(),
     password: joi.string().regex(regexPassword).required(),
-    edad: joi.number().integer().positive().max(100).min(10).required(),
-    email: joi.string().email().required()
+    email: joi.string().email().required(),
+    birthDay: joi.date().iso().required(),
+    //edad: joi.number().integer().positive().max(100).min(10).required(),
 })
 
 const SchemaUserId = joi.object().keys({
@@ -46,7 +47,7 @@ const validateUser = (schemaRequest) => {
     })
 }
 const validateUserEmail = (schemaRequest) => {
-  //Check out if schemaRequest has well format email
+  //Check out if email is a good format
   return joi.validate(schemaRequest, schemaUserEmail)
 }
 
