@@ -20,6 +20,9 @@ import IconButton from 'material-ui/IconButton';
 import userCrudApi from '../../api/user';
 
 
+//Validation forms component
+import validation from 'react-validation-mixin'; 
+
 
 
 const styles = theme => ({
@@ -109,7 +112,7 @@ class Register extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     }
-
+  
   render() {
     const { classes } = this.props;
     return (
@@ -130,12 +133,9 @@ class Register extends React.Component {
                   </Typography>
                 <form action="" onSubmit={this.handleSubmit}>
                   <FormControl required className={classes.formControl}>
-                    <InputLabel
-                      className={classes.inputLabel}
-                      htmlFor="name-simple">
-                      First Name
-                    </InputLabel>
-                    <Input
+                    <TextField
+                      required
+                      label="First Name"
                       autoFocus
                       value={this.state.firstName}
                       onChange={event => this.setState({"firstName": event.target.value})}

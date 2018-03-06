@@ -28,7 +28,7 @@ const service = require('../services/auth.service')
       }))
       .catch(error => res.status(500).json({
         error: true,
-        message: error.errmsg
+        message: error.info
       }));
 }
 
