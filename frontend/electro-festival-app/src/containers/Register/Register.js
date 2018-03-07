@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+
 
 
 //Material-ui components
@@ -18,12 +20,11 @@ import IconButton from 'material-ui/IconButton';
 
 // Own components
 import userCrudApi from '../../api/user';
+import validation from '../../validators/Register.validator';
 
 
-//Validation forms component
-import validation from 'react-validation-mixin'; 
 
-
+//Thirty-components
 
 const styles = theme => ({
   root: {
@@ -78,9 +79,11 @@ const styles = theme => ({
   },
 
 });
-class Register extends React.Component {
+class Register extends Component {
   constructor(props) {
     super(props)
+    
+    //state
     this.state = {
       firstName: '',
       lastName: '',
@@ -88,11 +91,74 @@ class Register extends React.Component {
       email: '',
       birthDay: '',
       password: '',  
-      showPassword: false
+      showPassword: false,
+      // error:false,
+      helpText: '',
+      erroMessage : [
+        { "firstName": "First Name is requried", error: false},
+        {"lastName": "Last Name is required", error: false}
+      ]
       // edad: 0,
     };
+  };
+
+  //validation
+  handleBlur(event, inputField) {
+
+    if (inputField === "firstName") {
+      if (event.target.value === '') {
+        this.setMessageError(this.state.erroMessage, inputField)
+        // this.setState({ errorMessage: true})
+      } else {
+        this.setState({error: false})
+      }
+    }
+    if (inputField === "lastName") {
+      if (event.target.value === '') {
+        this.setMessageError(this.state.erroMessage, inputField)
+        // this.setState({ errorMessage: true})
+      } else {
+        this.setState({error: false})
+        }
+      }
+    }
+    
+    
+
+
+
+  //   if (event.target.value === '') {
+  //     if (inputField === "firstName") {
+  //       this.setState({error: true})
+  //       this.setState({
+  //         helpText: this.filterMessage(this.erroMessage, inputField)[0]
+  //       })
+  //   } else if (inputField === "lastName"){
+  //       this.setState({error: true})
+  //       this.setState({
+  //         helpText: this.filterMessage(this.erroMessage, inputField)[0]
+  //       })
+  //     } else {
+  //       this.setState({error: false, helperText:''})
+  //       }
+  //   } 
+  // }
+  
+
+  setMessageError(erroMessage, inputField) {
+    const errorFilter = erroMessage.filter((data) => data[inputField])
+    console.log(this.state.erroMessage.slice())
+    // this.setState(errorFilter[0].error:true)
+    return errorFilter[0]
   }
   
+//   var countriesFiltered = Object.keys(countries).filter(function(key) {
+//     return key === "China";
+// }).map(function(key) {
+//     return countries[key];
+// });
+
+  //password
   handleClickShowPasssword = () => {
     this.setState({ showPassword: !this.state.showPassword });
   };
@@ -108,13 +174,13 @@ class Register extends React.Component {
         }
       });
   }
-  
   handleSubmit(event) {
     event.preventDefault();
     }
   
   render() {
     const { classes } = this.props;
+    let errorMessage = this.state.erroMessage;
     return (
       <Grid container className={classes.root}>
         <Grid item xs={12}>
@@ -134,22 +200,25 @@ class Register extends React.Component {
                 <form action="" onSubmit={this.handleSubmit}>
                   <FormControl required className={classes.formControl}>
                     <TextField
+                      onBlur={(event) => this.handleBlur(event, "firstName")}
                       required
+                      error={errorMessage[0].error}
                       label="First Name"
+                      helperText={this.state.helpText}
                       autoFocus
                       value={this.state.firstName}
                       onChange={event => this.setState({"firstName": event.target.value})}
                     />
                   </FormControl>
                   <FormControl required className={classes.formControl}>
-                    <InputLabel 
-                      className={classes.inputLabel} 
-                      htmlFor="name-simple">
-                      Last Name
-                    </InputLabel>
-                    <Input 
-                      value={this.state.name} 
-                      onChange={event => this.setState({"lastName": event.target.value})} 
+                    <TextField
+                      onBlur={(event) => this.handleBlur(event, "lastName")}
+                      required
+                      error={this.state.error}
+                      label="Last Name"
+                      helperText={this.state.helpText}
+                      value={this.state.lastName}
+                      onChange={event => this.setState({ "lastName": event.target.value })}
                     />
                   </FormControl>
                   <FormControl required className={classes.formControl}>
@@ -235,9 +304,19 @@ class Register extends React.Component {
   }
 }
 
+Register.protoTypes = {
+  errors: PropTypes.object,
+  validate: PropTypes.func,
+  isValid: PropTypes.func,
+  handleValidation: PropTypes.func,
+  getValidationMessages: PropTypes.func,
+  clearValidations: PropTypes.func,
+}
 
 
-export default withStyles(styles)(Register);
+
+
+export default withStyles(styles)(Register)
 
 
 
@@ -247,4 +326,3 @@ export default withStyles(styles)(Register);
 
 
 
-//3175780256

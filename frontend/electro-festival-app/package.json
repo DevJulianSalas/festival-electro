@@ -4,16 +4,17 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "create-react-class": "^15.6.3",
     "inline-style-prefixer": "^4.0.0",
     "joi": "^13.1.2",
     "lint": "^1.1.2",
-    "material-ui": "^1.0.0-beta.34",
+    "material-ui": "^1.0.0-beta.36",
     "material-ui-icons": "^1.0.0-beta.17",
+    "prop-types": "^15.6.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.1",
-    "react-validation-mixin": "^5.4.0",
     "sockjs-client": "^1.1.4"
   },
   "scripts": {
