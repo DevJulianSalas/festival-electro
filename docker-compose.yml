@@ -1,33 +1,40 @@
 version: '3'
 services:
-  web:
-    image: platnet/festival-electro-app:develop
-    build: ./node
-    volumes:
-      - "./node/app:/home/app/"
-      - "/home/app/node_modules"
-    ports:
-      - "3030:3000"
-    links:
-      - mongodb
-    env_file:
-      - dev.env
+  # web:
+  #   image: platnet/festival-electro-app:develop
+  #   build: ./node
+  #   volumes:
+  #     - "./node/app:/home/app/"
+  #     - "/home/app/node_modules"
+  #   ports:
+  #     - "3030:3000"
+  #   links:
+  #     - mongodb
+  #   env_file:
+  #     - dev.env
   
-  mongodb:
-    image: mongo:3.4
-    ports:
-      - 27017:27017
-    volumes:
-      - ./datadb:/data/db
+  # mongodb:
+  #   image: mongo:3.4
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - ./datadb:/data/db
   
   frontend:
     image: platnet/festival-electro-app-frontend:develop
-    build: ./frontend/electro-festival-app
+    build:
+      context: ./frontend
+    container_name: platnet_festival_electro_app
     ports:
       - "3000:3000"
       - "35729:35729"
     volumes:
-      - ./frontend/electro-festival-app:/app
+      - ./frontend/app:/home/desarrollo/
+    environment:
+      - HOST=0.0.0.0
+      - PORT=3000
+    working_dir: /home/desarrollo/
+    command: /bin/bash -c  "cd $NAME_PROJECT && yarn start"
 
 
     
