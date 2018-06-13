@@ -10,43 +10,30 @@ import { withStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
-
-
-
+import Paper from '@material-ui/core/Paper';
 
 const styles = theme => ({
-  
-  root: {
-    flexGrow: 1,
+  root:{
+    flexGrow:1,
+    "padding-top":50,
   },
-  container:{
-    display: "flex",
-    position: "absolute",
-    top: 50,
-    left: 50,
-  },
-  submit:{
-    "background-color": "red",
-  }
   
 })
-
 
 
 class Register extends React.Component {
     render() {
       const { classes } = this.props;
         return (
-          <div className={classes.root}>
-            <Grid
-              container
-              justify="center"
-              wrap="wrap"
-
-            >
-              <Grid item xs={12} sm={4}>
-                <Card xs={12}>
-                  <form xs={12}>
+          <Grid 
+            container className={classes.root}
+            alignItems="center"
+            justify="center"
+            direction="column"
+          >
+            <Grid item xs={12} sm={4}>
+              <form xs={12}>
+                  <Card xs={12}>
                     <CardContent>
                       <IconButton>
                         <i className="fab fa-facebook-square"/>
@@ -104,63 +91,19 @@ class Register extends React.Component {
                         >
                         </TextField>
                         <Button 
-                          simple color="primary" size="lg"
-                          color="default" variant="contained" 
+                          color="primary"
+                          color="default" variant="contained"
+
                         >
                           Go Head!
                         </Button>
                       </div>
                     </CardContent>
-                  </form>
-                </Card>
-
-              </Grid>
-            </Grid>  
-          </div>
-          // <Grid
-          //   container
-          //   spacing={16}
-          //   direction="column"
-          //   className={ classes.container} 
-          // >
-          //   <Grid item xs={12}>
-          //     <Card className={ classes.card}>
-          //       <form xs={12}>
-          //         <CardHeader/>
-          //           <IconButton>
-          //             <i className="fab fa-facebook-square"/>
-          //           </IconButton>
-          //           <IconButton>
-          //             <i className="fab fa-twitter-square"/>
-          //           </IconButton>
-          //           <IconButton>
-          //             <i className="fab fa-instagram"/>
-          //           </IconButton>
-          //           <CardContent>
-          //             <TextField
-          //               id="username"
-          //               label="Username"
-          //               margin="normal"
-          //             >
-          //             </TextField>
-          //             <TextField
-          //               id="email"
-          //               label="Email"
-          //               margin="normal"
-          //             >
-          //             </TextField>
-          //             <TextField
-          //               id="password"
-          //               label="Password"
-          //               margin="normal"
-          //             >
-          //             </TextField>
-          //           </CardContent>
-          //         </form>
-          //     </Card>
-          //   </Grid>
-          // </Grid>
-            
+                  </Card>
+                </form>
+            </Grid>
+          </Grid>
+          
         );
     }
 }

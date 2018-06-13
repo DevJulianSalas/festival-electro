@@ -8,7 +8,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 
 const styles = {
-  colorPrimary: 'default'
+  colorPrimary: '#fafafa'
 }
 
 
@@ -22,13 +22,12 @@ class Header extends React.Component{
 
   render() {
     const { classes } = this.props
-    console.log(classes)
     return(
       <div>
-        <AppBar position="static" color="default">
+        <AppBar position="static" color={classes.colorPrimary}>
           <Toolbar>
             <Typography variant="title" color="inherit">
-              Title
+              <NavLink to="/">Home</NavLink>
             </Typography>
             <Button color="inherit"><NavLink to="/evento">crea un evento</NavLink></Button>
             <Button color="inherit"><NavLink to="/registrarse">Registrarse</NavLink></Button>
